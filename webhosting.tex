@@ -1,0 +1,21 @@
+\section{Webhosting}
+
+\begin{quote} "Webhosting bezeichnet die Bereitstellung von Speicherplatz, dem Webspace, für Domains auf Webservern. Der Provider vermietet diesen Speicherplatz und stellt den Betrieb des Servers und die Anbindung an das Internet sicher. Darüber hinaus sorgt er für die ständige Überwachung auf der Applikationsebene und stellt Statistiken über die Nutzung zur Verfügung."\cite{Webhosting} \end{quote}
+
+
+Die Wahl des Serviceproviders fiel zunächst auf www.world4you.com, welcher ein kompetitives Preis-Leistungs-Verhältnis bietet und aufgrund von bestehenden Erfahrungen als technisch ausgeklügelt und vertrauenswürdig erachtet wurde. Genauer gesagt wurde das „Domainserver 2018“-Paket erworben, welches folgende Features bot:
+\begin{itemize}
+\item Kostenlose Domainregistrierung
+\item Gratis SSL Zertifikate (https)
+\item DSGVO konform
+\item Twin Hosting Technologie
+\item 50 GB	Highspeed Webspace
+\end{itemize}
+
+Die Domain www.threesixfive.at wurde in diesem Zuge gekauft. Auf dem Webserver wurde die Projekt Präsentation Webseite aufgesetzt und die Domain damit verknüpft.
+
+\subsection{Webhosting Probleme}
+Ein gravierendes Problem, welches bei www.world4you.com auftrat ist, dass das „Domainserver 2018“-Paket ausschließlich MySQL-Datenbanken unterstützt. \textit{ThreeSixFive} jedoch auf einer PostgreSQL-Datenbank aufbaut. Nach Nachfrage auf eine mögliche Erweiterung der unterstützten Datenbanken, bei dem Support Team von www.world4you.com, wurde bestätigt das dies nicht möglich sei.
+
+\paragraph{Lösung}
+Es wurde nach einem alternativen Serviceprovider gesucht. Nach einiger Recherche fiel die Wahl auf www.digitalocean.com, dieser bietet auf Linux basierende Root-Server. Root-Server sind im Gegensatz zu vorkonfigurierten Webspaces selbst mit Linux aufzusetzen. Dies hat den Vorteil, dass selbst darüber bestimmt werden, kann welche Server (Apache, Nginx), Programme und Tools installiert werden sollen. So wurde es ermöglicht die benötigte Umgebung für eine PostgreSQL-Datenbank, und somit für \textit{ThreeSixFive}, zu erzeugen. Root-Server heißen unter www.digitalocean.com „Droplets“, dies übersetzt sich zu Tropen und bezieht sich auf die Skalierbarkeit des Servers. DigitalOcean bietet zudem ausführliche Analyse und Kontrolle Tools für die Überwachung des Servers direkt in ihrem Webportal an. Diese werden verwendet, um mögliche Schwächen der Hardware oder Software schnellst möglich zu erkennen.
