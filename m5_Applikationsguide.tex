@@ -1,0 +1,29 @@
+\section{Strukturierung der ThreeSixFive Applikation}
+Um die perfekte Ernährungsapplikation zu erstellen und dem Besucher das bestmögliche Nutzererlebnis zu gewährleisten, ist eine optimale Hierarchiestruktur der Webseite erforderlich.\\
+Bei dem Aufruf der Applikation wird man zunächst von einer Landingpage begrüßt, die die Features übersichtlich strukturiert veranschaulicht. Beim betätigen des „Get Started“ Button wird man auf die eigentliche Applikation weitergeleitet, wo man von einem benutzerfreundlichen einzigartig designtem Log In begrüßt wird. Der Log In besteht aus einer Email und einem Passwort, welches man zuvor in der Registrierung gesetzt hatte. Beim Registrieren muss man seinen Vor- und Nachnamen, seine E-Mail und sein gewünschtes Passwort angeben. Es wurde sich bewusst gegen mehr benötigte Anmeldeinformationen entschieden, da diese die Nutzerfreundlichkeit der Applikation negativ beeinflussen würden. Das Registrierungsformular simpel und auf das Wesentliche zubeschränken, gehört zu den Maßnahmen, welche getroffen wurden, um die flüssige Benutzung zu garantieren.\\
+
+
+
+Neben dem Login und der Registrierung wird die Applikation von einem logischen authorisierungs Guard begleitet, der die Hauptseiten für einen nicht eingeloggten Benutzer sperrt und Zugang nur dann gewährt, insofern man eingeloggt ist. Dieser Guard, in Form einer TypScript Klasse, fragt ab, ob das currentUser Attribut gesetzt ist, welches den aktuellen User beinhaltet. Wenn das Attribut gesetzt ist, gewährt dir der authorisierungs Guard Berechtigung auf die Main Applikation.\\
+
+
+
+Sobald man sich das erste mal eingeloggt hat, wird man auf die foodFormular Komponente geleitet. Dort kann man als User auswählen wie viele Personen sich einen Plan teilen möchten. Danach stehen dem User 5 verschiedene Diätformen zur Auswahl, unter denen man sich von keiner bis zu allen 5 entscheiden kann. Zur Auswahl stehen: Glutenfrei, Proteinreich, Kalorienarm, Kohlenhydratarm und Milchproduktfrei.\\
+
+
+Anschließend werden die Tage an denen der User ein Frühstück, Mittagessen, Abendessen oder einen Snack generiert haben will, ausgewählt. Anschließend folgen die Allergene, unter denen man bis zu 14 Allergenen aussuchen kann. Zuletzt folgen die NoGos unter denen man bis zu 17 NoGos auswählen kann. Beim Submitten des Formulars wird anhand der Eingabefelder ein JSON Objekt generiert, welches mittels des http Client als Post Request an den Server geschickt wird, wo das Objekt anschließend verarbeitet wird und daraus ein Wochenplan generiert wird. Nach der Response mit einer Durchschnittsgeschwindigkeit von 30 Sekunden erhält man einen generierten Wochenplan der perfekt auf die ausgewählten Userpräferenzen abgestimmt ist.\\
+
+
+In der Plan Komponente kann man nun mit den Links und Rechts Buttons zwischen den einzelnen Wochen Navigieren und sich somit zukünftige Wochen im Voraus anzeigen lassen.\\
+
+
+Links Oben befindet sich ein PDF Download Button. Einmal betätigt wird ein Get Request mit der aktuellen Woche an den Server geschickt. Als Response erhält man anschließend eine generierte PDF mit dem Wochenplan. Dies kann insofern nützlich sein, falls man den Plan offline auf einem Mobile Device angezeigt haben möchte. Klickt man auf einen der kleinen Reload Buttons neben jedem Rezept, so wird ein neuer Get Request an den Server geschickt mit der ID des angeklickten Rezeptes, und als Response erhält man einen neuen Plan in der das Rezept durch ein neues Rezept ersetzt wird, insofern es von dem User so gewünscht wird.\\
+
+
+Klickt man in der Week View auf einen Tag so wechselt man mittels der Angular Direktive ngSwitch auf die Day View. Dort bekommt man die einzelnen Rezepte, vom Frühstück bis zum Snack nochmals detailliert angezeigt. Klickt man nun auf einer dieser Komponente, so öffnet sich unter den Rezepten ein Fenster, welches das einzelne Rezept nochmals mit seinen Nährwerten, Zutaten und Kochanleitung darstellt. Mithilfe des Back Buttons kann man in der Day View zurück in die Week View navigieren.\\
+
+
+Die Einkaufsliste enthält alle Zutaten der aktuellen Woche, die Serverseitig mithilfe des Wochenplanes generiert werden. Die Liste wird dynamisch anhand eines JSON Files im HTML als Template mit der Direktive *ngFor ausgegeben. Jeder Eintrag beinhaltet einen Löschen Button, sofern man das Lebensmittel mit einem eigenen ersetzen mag oder komplett aus der liste entfernen möchte, und einen Check Button, mit der man das Lebensmittels als gekauft kennzeichnen kann. Dieser Eintrag erscheint dann in einer neuen Liste, die ebenfalls mittels der Angular Direktive *ngFor die Liste mit den gecheckten Lebensmitteln dynamisch auflistet. Dort kann man ebenfalls die Einträge aus der gecheckten Liste entfernen sofern man Sie bereits eingekauft hat. Die Komponente bietet noch ein Input Formular an, in der man zur Liste seinen Eigenen Lebensmittel mit Mengenangabe und Einheit hinzufügen kann. 
+
+
+Im Settings Tab kann man gegebenfalls seine Accountdaten überarbeiten und Informationen zum generierten Plan ändern, sofern man sich gegen die zuvor entschiedenen Präferenzen entscheiden möchte.

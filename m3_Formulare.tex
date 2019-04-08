@@ -1,0 +1,31 @@
+\section{Angular Formulare}
+\subsection{Was sind Formulare?}
+Bei einem Formular handelt es sich um ein Teil einer Seite, in dem Benutzer aufgefordert werden bestimmte Informationen auszufüllen, diese Bereiche nennen sich in der Webentwicklung “forms”. Diese Informationen werden gesammelt und nach einer Überprüfung wiederrum in das System bzw. in die Datenbank eingespeist. Es handelt sich meist um Informationen wie Name, Alter, Adresse, Geschlecht oder anderen personenbezogenen Daten. Das Ziel von Webformularen ist es wichtige Kontaktinformationen der neuen Kunden zu erfassen, diese Daten werden beim Aufbau einer Kundenbeziehung einen wichtigen Teil beitragen.\\
+Weiters dient ein Webformular zur Informationssammlung. Informationen, welche Anmeldungen ermöglichen oder Eingaben, um Profile zu aktualisieren.\\
+Man verwendet Formulare, um sich anzumelden, eine Bestellung aufzugeben, ein Meeting zu vereinbaren, einen Flug zu buchen, Hilfeanfrage zu stellen und unzählige andere Aufgaben, um nur ein paar Beispiele zu nennen.\\
+Ein Formular enthält Eingabeelemente, die Interaktion mit dem Nutzer erlauben, zum Beispiel Kontrollkästchen, Schaltflächen, Knöpfe oder auch Textfelder. All diese Elemente dienen dazu Informationen abzufragen oder schlicht die Eingabe dieser zu ermöglichen.\\
+Zu beachten ist, dass bei der Entwicklung eines Formulars es wichtig ist, deutliche Anweisungen und genaue Rückmeldungen zu ermöglich und ebenso zu verlangen, die den Benutzer effizient und effektiv durch das Formular geleiten.\\
+Man kann nahezu jedes Formular mit einer Angular-Vorlage erstellen. Anmeldeformulare, Kontaktformulare und somit nahezu jede Art von Geschäftsformulars werden unterstützt und angeboten.\\
+In Angular gibt es zwei verschiedene Arten von Formularen. Die Reaktiven und die Vorlagengesteuerten oder auch Template-Gesteuerten genannt.
+\subsection{reaktive Formulare}
+Reaktive Formulare\cite{ReactiveForms} sind Formulare mit Formulareingaben, deren Werte sich im Laufe der Zeit ändern. Mit reaktiven Formularen kann man ein einfaches Formularsteuerelement erstellen und aktualisieren, mehrere Steuerelemente in einer Gruppe verwenden, Formularwerte validieren und erweiterte Formulare implementieren.\\
+Reaktive Formulare verwenden ein explizites und unveränderliches Modell bzw. diesen Ansatz, um den Zustand eines Formulars zu einem bestimmten Zeitpunkt zu verwalten. Jede Änderung des Formularzustands gibt einen neuen Zustand zurück, der die Integrität des Modells zwischen den Änderungen aufrechterhält.
+Das Testen bei reaktiven Formularen ist auch sehr trivial, denn getestet wird ob die eingegebenen Daten des Users konsistent und vorhersehbar sind, wenn sie angefordert werden.\\
+Reaktive Formulare sind robuster, skalierbarer, wiederverwendbarer und überprüfbarer. Wenn Formulare ein Schlüsselelement der Anwendung darstellen oder bereits reaktive Muster zum Erstellen der Anwendung verwendet werden, so sollte auf reaktive Formulare zurückgreifen.
+\subsection{vorlagengesteuerte Formulare}
+\paragraph{Ablauf}
+Man erstellt zunächst ein Angular-Formular mit einer Komponente und einer Vorlage. Danach verwendet man das ngModel „two-way data-binding“- Datenbindungen für das Lesen und Schreiben, um Eingangssteuerwerte zu erzeugen. Weiters verfolgt man die Statusänderungen und die Gültigkeit von Formularsteuerelementen, um ein visuelles Feedback bereit zu stellen, indem eine CSS-Klassen verwendet wird, die den Status der Steuerelemente verfolgt. Danach zeigt man den Benutzern Validierungsfehler an und aktiviert oder deaktiviert die Formularsteuerelemente. Zu guter Letzt werden die Informationen über HTML-Elemente hinweg mit Vorlagenreferenzvariablen geteilt.
+Vorlagengesteuerte Formulare\cite{TemplateDrivenForms} sind nützlich, um einer App ein einfaches Formular hinzuzufügen, beispielsweise ein E-Mail-Listen-Anmeldeformular. Diese lässt sich leicht zu einer App hinzufügen, sie skalieren jedoch nicht so gut wie reaktive Formulare. Wenn man über grundlegende Formularanforderungen und Logik verfügt, die nur in der Vorlage verwaltet werden kann, verwendet man vorlagengesteuerte Formulare.
+Man kann Steuerelemente an Daten binden, Validierungsregeln festlegen und Validierungsfehler anzeigen, bestimmte Steuerelemente bedingt aktivieren oder deaktivieren, das integrierte visuelle Feedback auslösen und vieles mehr.
+
+\paragraph{Setup}
+Bei den Reaktiven Formularen ist das Setup des Formularmodell expliziter, da die Erstellung durch Komponentenklassen geschieht. Die Vorlagengesteuerte ist weniger explizit, da das Formularmodell nicht durch Klassen geschieht, sondern durch direkte Anweisungen.
+
+\paragraph{Datenmodell}
+Das Datenmodell im reaktiven Formular ist strukturiert, wo hingegen bei der Template-gesteuerten keine Struktur aufweist.
+
+\paragraph{Validierung}
+Bei der reaktiven Art ist die Formularprüfung durch eigene Funktionen geschrieben, somit kann genau das getestet werden was die Funktion auch verlangt. Die Vorlagengesteuerte Formularprüfung basiert auf vorgegebenen Richtlinien, die nicht veränderbar sind.
+
+\paragraph{Fazit}
+Reaktive Formulare bieten mehr Vorhersagbarkeit durch synchronen Zugriff auf das Datenmodell, Unveränderlichkeit mit beobachtbaren Operatoren und Änderungsverfolgung durch beobachtbare Streams. Durch den direkten Zugriff auf Änderungen an Daten in der Vorlage bevorzugen, sind vorlagengesteuerte Formulare weniger explizit, da sie auf in die Vorlage eingebettete Anweisungen angewiesen sind, zusammen mit veränderbaren Daten, um Änderungen asynchron zu verfolgen.

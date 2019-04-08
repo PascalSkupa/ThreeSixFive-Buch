@@ -1,0 +1,44 @@
+\section{Observables}
+Als Angular2 herauskam, tat es dies mit vielen neuen Features, eines davon sind Observables\cite{Observables}. Observable ist keine Angular spezifische Neuheit, sondern ein neuer Standard für die Verwaltung von asynchronen Daten, die in der ES7-Version (ECMAScript 7) enthalten sind. Angular verwendet observables weitgehend im Eventsystem und im HTTP-Service.
+Observables können in einer bestimmten Zeitspanne mehrere Werte annehmen die sich dynamisch verändern.
+Wenn man aus der Welt der Promises kommt, muss man sich zunächst umgewöhnen, da Promises immer nur einen Wert zurückgeben. Des Weiteren sind Observables stornierbar. So können zum Beispiel Abonnements oder andere Werte dynamisch geändert werden.
+Bei Versprechungen (Promises) ist das anders, ein Versprechen ist nicht stornierbar. Wenn das Versprechen übergeben wird, ist der Prozess der die Lösung dieses Versprechens hervorbringt, bereits im Gange und man hat in der Regel keinen Zugang um die Ausführung der Lösung dieses Versprechens zu verhindern, abzufragen oder zu ändern.
+\subsection{Push vs. Pull}
+Ein wichtiger Aspekt der Verwendung von Observables ist das „Observables pushen“. Push und Pull sind zwei verschiedene Methoden, die beschreiben, wie ein Datenproduzent mit dem Datenkonsumenten kommuniziert.
+\paragraph{Pull}
+Beim „pullen“ entscheidet der Datenkonsument, wann er die Daten vom Datenproduzenten erhält. Dem Hersteller ist nicht bekannt, wann die Daten an den Verbraucher geliefert werden.
+Jede Javascript-Funktion verwendet den Pull. Die Funktion ist ein Datenproduzent, und der Code, der die Funktion aufruft, verbraucht sie, indem er einen einzelnen Rückgabewert aus seinem Aufruf herausnimmt.
+\paragraph{Push}
+Beim „pushen“ funktioniert es umgekehrt. Der Datenproduzent (z.B der Ersteller des Newsletters) entscheidet, wann der Verbraucher (z.B der Abonnent des Newsletters) die Daten erhält. 
+Promises sind die gebräuchlichste Form des Push in JavaScript. 
+Ein Promise (z.B der Produzent) liefert einen aufgelösten Wert an registrierte Callbacks (z.B die Konsumenten). Im Gegensatz zu Funktionen ist das Promise dafür verantwortlich genau zu bestimmen, wann dieser Wert an die Callbacks weitergeleitet wird. 
+Observables sind eine neue Art, Daten in JavaScript zu übertragen. Ein Beobachtbarer ist ein Produzent von mehreren Werten, der sie an die Abonnenten weitergibt.
+\subsection{Observables in Angular}
+Die häufigste Verwendung von Observables in Angular ist bei der Anwendung des HTTP-Client
+\begin{figure}[H] \centering \includegraphics{http1.png} \caption{Get Request mit Observable als Respone} \end{figure}
+Zu sehen ist ein einfacher HTTP-Client mit einer fetchUsers-Methode, die ein Observable liefert. Man möchten die Benutzer wahrscheinlich in einer Art Liste anzeigen, also muss man die Response anderweitig verarbeiten. Da diese Methode ein Observable zurückgibt, müssen wir sie abonnieren. In Angular können wir Observables auf zwei Arten abonnieren:
+\paragraph{Erster Fall}
+Man abonniert in der Vorlage ein Observable mit Hilfe der asynchronen Pipe. Der Vorteil dabei ist, dass Angular sich während des Lebenszyklus einer Komponente mit Ihrem Abonnement befasst. Angular wird sich für den User automatisch an- und abmelden. Dabei sollte nicht vergessen werden das CommonModule Modul in app.module.ts zu importieren, da die Async-Pipe dadurch erst benutzbar gemacht wird.
+\paragraph{Zweiter Fall}
+\begin{figure}[H] \centering \includegraphics{subscribe.png} \caption{Observable mit subscribe() abonniert} \end{figure}
+Das Observable wird mit der subscribe()-Methode abonniert. Dies kann praktisch sein, wenn man zuerst etwas mit den Daten machen möchten, bevor man sie anzeigen lässt. Der Nachteil ist, dass der Entwickler das Abonnement selbst verwalten muss.
+\begin{figure}[H] \centering \includegraphics{html_observable.png} \caption{html template der observable ausgabe} \end{figure}
+In beiden Fällen gibt es beim HTML Template keine Unterschiede. Allerdings unterscheidet sich die Logik und somit das TypeScript wie man an den Codesnippets erkennen kann. Fall zwei ist in den meisten Fällen umständlicher und komplexer, weil man die Subscribtion nicht manuell managen muss. Die Subscribtion wird während dem zweiten Verfahren zum Überschreiben offengehalten, was allerdings nur in speziellen Anwendungsfällen notwendig ist und oftmals zu Fehlern führen kann. 
+\subsubsection{Eigene Observables}
+Auch wenn Angular die Möglichkeit häufige Observables zu managen anbietet, kommt man bei komplexeren Anwendungen nicht um das Schreiben eigener Observables herum.  
+\begin{figure}[H] \centering \includegraphics{ownObservable.png} \caption{selbstgeschriebener Observable} \end{figure}
+Wie man sehen kann wird mit „new Observable()“ ein neues Observable Objekt erzeugt. Danach wird er einem Server zugewiesen, mit „next()“ ausgeführt und mit „unsubscribe“ wird die Subscribtion unterbrochen. 
+Beim Erzeugen eines Observable wird immer ein Observer als Parameter in Form einer Funktion angegeben. Dort finden die einzelnen Aktionen des Observable statt. Das Abonnieren auf ein Observable ist immer notwendig, ansonsten passiert nichts.
+Der Code im Observabe repräsentiert das, was der Observable ausführt. Ein Observable bietet dem Entwickler drei verschiedene Methoden.
+\begin{itemize}
+\item next (sendet Daten, beispielsweise ein Objekt zu seinem Subscriber)
+\item error (sendet eine JavaScript Fehlerausgabe, die man wiederrum einfangen kann falls man diese anderweitig verarbeiten möchte)
+\item complete (beschreibt was passiert nachdem der Observable ausgeführt wurde)
+\end{itemize}
+Aufrufe der „next()“ Methode sind die häufigsten, da man in den meisten Fällen die Daten an den Subscriber senden möchte.
+Zusammenfassend lässt sich sagen das Observables einige Vorteile im Vergleich zu Promises bieten. Sofern diese aber nicht notwendig sind, empfiehlt es sich auf die einfachere Methode der Promises zurückzugreifen. Oftmals ist allerdings keine der beiden Techniken notwendig, da in den meisten Fällen eine einfache Abfrage an den Server genügt. In diesen besonderen Spezialfällen in denen Observables notwendig sind, sind sie ein unausweichlicher Segen da es kaum Alternativen gibt um die Responses besser zu managen. 
+
+
+
+
+

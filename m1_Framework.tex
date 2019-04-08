@@ -1,0 +1,42 @@
+\section{Framework}
+Die einzelnen Komponenten waren nun festgelegt und ThreeSIxFive vor der Frage, welches Cientseitige Framework ThreeSixFive verwenden möchte. Nach langem Recherchieren standen drei verschiedene Frameworks zur Auswahl.
+\begin{figure}[H] \centering \includegraphics{Framework.png} \caption{React.js vs Angular vs Vue.js} \end{figure}
+\subsection{React.js}
+React.js\cite{ReactJs} ist eine von Facebook geschriebene open-source Library mit der man Benutzeroberflächen für das Web entwickeln kann. Es basiert auf einem Komponentenbasiertem Design (einzelne wiederverwendbare Inhalte einer Webseite) welche schlüssig miteinander agieren. React.js verfolgt den Ansatz so wenig wie möglich an dem DOM (Document Object Model) zu manipulieren um Verzögerungen und Ruckler beim durchsurfen der Webseite zu vermeiden (anders als bei JQuery beispielsweise,wo das DOM ständig manipuliert wird). Stattdessen stellt react.js eine Verbindung zwischen den einzelnen Komponenten und dem DOM her, indem es eine virtuelle Abbildung des DOMs benutzt, und nur den benötigten Teil beim verändern neu aufruft. Eventhandler sind von nun an nicht mehr notwendig da react.js jegliche Änderungen im DOM selbst übernimmt und man als Entwickler nur auf den optischen Zustand und die Funktionalität der Komponenten achten muss. Leider deckt react.js nur den View-Teil eines Front-End Frameworks ab. Daher sollte man begleitend zu react.js noch weitere JavaScript-Librarys einbinden.
+\subsection{Angular}
+Angular\cite{Angular} ist ein auf Type-Skript basierendes Front-End-Webapplikationsframework. Es wird von einer Community aus Einzelpersonen und Unternehmen, angeführt durch Google, entwickelt und als Open-Source-Software publiziert.
+
+Angular bietet mit einer riesigen Library (im Gegensatz zu react.js und vue.js) ein Rundum-Sorglos Paket an. Routing, Validierung und Kommunikation mit dem Backend sind nur ein Bruchteil von den Features, die mit Angular abgedeckt werden. Mit der Angular-CLI, welche mit Node Packet Manager ganz leicht implementiert werden kann, wird der Entwickler mit Code-Generierung und dem Build der Anwendung unterstützt. Genau wie react.js basiert Angular auf einem Komponentenbasiertem Design welches innerhalb der Komponenten die View von der Logik trennt.
+
+Das Framework macht es möglich mit Komponenten zu kommunizieren, diese mit Daten zu versorgen und verschiedenste Events aus Komponenten entgegenzunehmen. Somit werden die einzelnen Komponenten mit verschiedenen Ein- und Ausgängen wiederverwendbar und für sich alleinstehend isoliert. Aufgrund der strikten Trennung können verschiedene Teams perfekt gleichzeitig an einem Projekt arbeiten.
+\subsection{Vue.js}
+Vue.js\cite{VueJs} ist eine auf JavaScript basierende Open-Source Library welches den Ansatz verfolgt mit wenig
+Code viel zu bewirken. Es lässt sich perfekt in andere Frameworks wie React.js und Electron
+integrieren und bietet mit wenig Lernaufwand einen großen Vorteil gegenüber anderen Frameworks.
+
+Genau wie react.js basiert vue.js auf dem Virtual Dom. Einer der Hauptgründe warum viele Teams
+auf vue.js setzen ist die Performance, die bei kleinen Anwendungen deutlich besser ist als bei
+anderen bekannten Frameworks. Die Dokumentation dieses Frameworks ist bekannt für seine simple
+Darstellung und leichte Verständlichkeit, dabei bleibt mehr Zeit für die wichtigen Dinge im Leben,
+Coden und Programmieren.
+
+Leider bietet vue.js, genau wie react.js nur den View-Part an. Die Logik
+muss entweder mit herkömmlichen Javascript, oder mithilfe anderer eingebundener Librarys
+programmiert werden.
+\subsection{Direkter Vergleich zwischen den drei Frameworks}
+\subsubsection{Typescript vs. Javascript}
+Ein großer unterschied von Angular zu React.js und Vue.js ist die Programmiersprache. Typescript bietet im Gegensatz zu JavaScript jede Menge Vorteile sei es eine stärkere und konsistentere Typisierung der Datensätze, das anbieten von eingebetteten Modulen oder die höhere Übersichtlichkeit der Logik in den Codezeilen. Das einzige, was gegen Typescript sprechen würde, wäre die längere Ladezeit beim aufrufen aufgrund von dem Compilingprozess der den Typescript Code in, vom Web lesbaren Javascript Code wandelt. Doch dies soll für das Projekt, aufgrund der generell hohen Komplexität der Anwendung, kein großes Hindernis darstellen. Sowohl die Komponenten als auch die Back-End Algorithmen sind aufgrund ihres Umfangs von einer langen Ladezeit geprägt, weshalb die Dauer der Typescript-compilation keine große Rolle spielt.
+\subsubsection{Framework vs. Library}
+Im Gegensatz zu Vue.js and React.js ist Angular nicht bloß nur eine Library, sondern ein umfassendes Framework welches reichliche Features und Module anzubieten hat. Es gibt strenge Richtlinien vor, wie ein Projekt zu gliedern ist um die Übersichtlichkeit zu bewahren, die meistens bei größeren Projekten verloren geht.
+
+Vue.js und React.js bieten hingegen als bloße Librarys mehr Flexibilität und den Vorteil der Einbindung in anderen Frameworks und das übernehmen verschiedener Inhalte aus anderen Librarys. Jedoch kommt mit hoher Flexibilität auch eine große Verantwortung. Freiheit an Modulen, Librarys und anderen Techniken kann sehr schnell zu Fehler führen, da die einzelnen Systeme nicht miteinander abgestimmt sind und erstmal richtige Schnittstellen definiert werden müssen.
+\subsubsection{Lernkurve}
+Im Gegensatz zu React.js und Vue.js muss man schon einige Stunden in Angular investieren um sich einen groben Überblick über die Funktionalitäten zu verschaffen. Und selbst dann, hat man gerade mal einen Bruchteil des Frameworks abgedeckt. Bestimmt wird man auch auf die ein oder andere Frustration beim entwickeln der Applikation stoßen, den oftmals werden viele Sachen in der Dokumentation leichter dargestellt als sie einfach sind. Und ein bloßes Programmierverständnis reicht leider nicht aus um das Framework zu beherrschen.
+
+Angular ist im Gegensatz zu anderen Frameworks eine für sich „eigene Sprache“ und oftmals sind keine Relationen zu herkömmlichen JavaScript zu erkennen. Dies könnte man als negativ betrachten, da man sich auf dieses neue Öko-System erstmal einlassen muss. Doch hat man den anstrengenden Teil erstmal hinter sich, bietet dieses System nur Vorteile die anderen Frameworks nicht bieten.
+
+Vue hingegen ist sehr leicht zu erlernen. Die Library ist aktuell gehypt wie keine anderen und viele junge Front-End Entwickler bevorzugen diese flexiblere Variante den anderen Frameworks. Ein großer Vorteil ist eben, neben der höheren Flexibilität die Unabhängigkeit die aufgrund der Einbindung anderer Librarys gegeben ist. Mit dieser Library ist es sehr leicht schnell eine einfache und funktionierende Applikation zu erstellen. Im Gegensatz zu Angular muss man sich kein komplettes System aneignen um überhaupt loslegen zu können, es reicht sich das anzuschauen was man auch wirklich benötigt. Für viele ein Vorteil, doch es kann auch den Workflow behindern, wenn man sich jedes Mal neu wissen für Funktionalitäten aneignen muss.
+
+React.js bietet entweder beide Vorteile, oder auch beide Nachteile. Je nachdem, wie man es betrachten möchte. Es ist das perfekte Mittel zwischen Angular und Vue.js mit einem eigenen, nicht so aufwendigen System wie Angular, aber dem Angebot einer Flexibilität, auch wenn nicht so flexibel wie Vue.js.
+\subsection{Fazit}
+ Die Entscheidung war nicht besonders schwer. Aufgrund der Komplexität des Projektes kommt Vue.js mit seiner Mangel an Features nicht in Frage. React.js hätte zwar genügend Möglichkeiten geboten, dies aber nur unter Einbindung anderer Librarys was eine Unübersichtlichkeit zur Folge hätte. Angular ist für den Zweck des Projekts perfekt mit seinen Features und zahlreichen Möglichkeiten geeignet. Nicht nur, weil im Schulunterricht bereits mit AngularJS gearbeitet wurde und deshalb der einstieg in Angular besonders einfach fällt, sondern auch weil die Interaktion mit dem Back-End und der Datenbank mit Angular um ein Vielfaches einfacher fällt. Neben den genannten Vorteilen bietet Angular zahlreiche UI-Librarys an, die für das Framework optimal angepasst sind. Den Lernaufwand, den man am Anfang in Angular stecken muss, ist definitiv Wert um danach durchgehend an der Applikation arbeiten zu können.
