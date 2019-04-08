@@ -1,0 +1,190 @@
+% ------------------------------------------------------
+%		       Chapter 1
+%			Backend
+% ------------------------------------------------------
+\section{Web-Framework}
+
+Webanwendungs-Frameworks\cite{WebApplicationFramework}, welche speziell dazu entwickelt sind um Designer oder Web-Entwickler im Bereich Web Anwendungen zu unterstützen, haben einen sehr weiten Umfang von Funktionalitäten. Jedes Webanwendungs-Framework hat schon bestimmte Grundfunktionen eingebaut, die sehr oft bei der Entwicklung von solchen Webanwendungen gebraucht werden. Solche Funktionen sind zum Beispiel Nutzer Management, Sicherheit, Datenpersistenz oder Template-Systeme. Da diese häufig benötigten Funktionen schon implementiert sind, spart der Entwickler enorm viel Zeit und Arbeit.
+
+\subsection{Allgemeine Definition von Framework}
+
+Ein Framework\cite{Framework} ist die Grundlage auf dem eine Applikation bei der Entwicklung aufbaut. Dieses Grundgerüst beinhaltet bereits viele Funktionen, die häufig benötigt werden, wodurch der Entwickler diese nicht jedes Mal neu programmieren muss. Bibliotheken sind eine Sammlung von Dateien, Programmen, Routinen oder andere Funktionen, die bei der Entwicklung einer Applikation verwendet werden können. Frameworks stellen eine Vielzahl von Bibliotheken zur Verfügung. Dadurch erspart sich der Entwickler Arbeit, da vieles schon vorgegeben ist, und die Programme sind weniger fehleranfällig, da die Bibliotheken von vielen anderen Entwicklern gewartet werden.
+
+\subsection{Häufige Funktionen eines Webanwendungs-Frameworks}
+
+Natürlich hat jedes Framework eigene individuelle Funktionen, jedoch gibt es bestimmte Eigenschaften, die jedes beinhaltet. Bei jedem Framework sind diese Funktionen anders ausgeprägt. Bei der Auswahl des richtigen Frameworks für eine Applikation muss der Entwickler abwiegen, was wichtig ist und welche Eigenschaften in welcher Ausprägung benötigt werden.
+
+\subsubsection{Sitzungsverwaltung und Benutzerauthentifizierung}
+
+Normale statische Webseiten behandeln jeden Besucher meisten komplett anonym. Das heißt, dass auf solchen statischen Webseiten kein Benutzer Management benötigt wird. Eine Web-Applikation erfordert hingegen oftmals eine Benutzerverwaltung. 
+
+\subsubsection{Sicherheit}
+
+Bei dem Thema Sicherheit sind zwei Aspekte sehr wichtig: Authentifizierung und Autorisierung. Bei der Authentifizierung wird überprüft, dass auf bestimmte Seiten auch nur authentifizierte Benutzer zugreifen können. Das heißt, das Framework überprüft automatisch, ob der anfragende Benutzer authentifizierbar ist. Zusätzlich werden mithilfe der Autorisierung die Berechtigungen des Benutzers überprüft, auf welche Seiten dieser zugreifen und welche Aktionen dieser ausführen darf. Oftmals werden diese Funktionen durch eine Administratoren-Schnittstelle von einem Entwickler verwaltet.
+
+\subsubsection{Datenpersistenz}
+
+Eine der wichtigsten und relevantesten Eigenschaften von Webanwendungs-Frameworks ist die Datenspeicherung. Webseiten von Webanwendungs-Frameworks werden aus gespeicherten Informationen generiert. Daher hat das Management von Daten eine essenzielle Funktion.
+
+\subsubsection{Cachen}
+
+Da das Abfragen von Daten, beziehungsweise das Generieren von Webseiten, durchaus rechenintesiv und zeitaufwendig sein kann, werden diese Daten häufig gecached. Das heißt, sie werden für eine bestimmte Zeit in einem eigenen Speicher zwischengespeichert, wodurch sich die Leistung sowie die Arbeitsgeschwindigkeit um ein Vielfaches verbessern lässt.
+
+\subsubsection{Vorlagensystem}
+
+Um dynamisch Webseiten aus gespeicherten Daten zu generieren, werden Vorlagen vorausgesetzt. Mithilfe eingebauter Vorlagensysteme wird viel Arbeit beim Erstellen einer Applikation abgenommen. Damit nicht für jeden Datensatz eine eigene Datei beziehungsweise Webseite erstellt werden muss, wird eine Vorlage genommen, in der die Daten immer nur eingefügt werden. Somit kann die Anzahl an unnötigen Dateien deutlich reduziert werden.
+
+\section{PHP}
+
+PHP\cite{WhatisPHP}, ein Akronym für Hypertext Preprocessor, ist eine Open-Source Programmiersprache, die speziell für Web Anwendungen entwickelt wurde. 
+
+PHP kann also in HTML implementiert werden. Im Vergleich mit anderen Sprachen, bei denen sehr viel Code gebraucht wird, um dasselbe zu erreichen, wird PHP einfach mit einem \codeword{<?php} und \codeword{?>} Tag in das HTML integriert. Dadurch wechselt man in den „PHP-Modus“. 
+Weiteres unterscheidet sich PHP, zum Beispiel von der clientseitigen Sprache Java Script, dass der Code noch am Server ausgeführt wird. Das heißt also der Code wird während des generieren des HTMLs verarbeitet und anschließend wird das Ergebnis an den Client geschickt. Somit kann der Client aus dem HTML Code nicht mehr herauslesen was von PHP erstellt wurde.
+
+\subsection{Was kann PHP?}
+
+Obwohl PHP\cite{WhatPHPcanDo} sehr auf Serverseitiges Programmieren fokussiert ist, kann man diese Sprache jedoch noch in vielen anderen Bereichen einsetzten. Es existieren 3 Haupteinsatzgebiete:
+
+\paragraph{Serverseitige Programmierung} Das wahrscheinlich bekannteste Einsatzgebiet von PHP ist das Arbeiten auf der Serverseite. Dafür benötigt man 3 Voraussetzungen: den PHP Parser, den Web Server und einen Web Browser. 
+
+\paragraph{Kommandozeilenprogrammierung} Zusätzlich kann man PHP ohne einen Web Server, sowie ohne einen Web Browser ausführen. Das einzige, was man benötigt ist der PHP Parser. Durch diese Funktion lassen sich sehr gut Skripte schreiben.
+
+\paragraph{Desktop Applikationen} Mithilfe von PHP sind ebenfalls Desktop Applikationen mit einer Grafischen Schnittstelle entwickelbar. Obwohl PHP sich nicht als beste Sprache dafür eignet, kann man jedoch sogar plattformübergreifende Applikationen schreiben.
+
+Ein weiterer sehr relevanter Vorteil von PHP ist die Plattformunabhängigkeit. Alle bekannten Betriebssysteme wie Windows, Linux, viele Unix Varianten (Solaris, HP-UX, etc), macOS, RISC OS, etc werden unterstützt. Da man PHP meistens auf einem Server benötigt, wird es von fast allen Web Server auch unterstützt. 
+
+Weiterhin hat man bei PHP die Wahl zwischen Objektorientierte Programmierung (OOP), Prozedurale Programmierung oder eine Kombination von beidem. Durch diese Wahl des Programmierparadigma ergeben sich unzählige Möglichkeiten.
+
+\paragraph{Objektorientierte Programmierung}
+
+Der Leitgedanke bei Objektorientierte\cite{OOP} Programmierung ist das erwenden von Objekten, um echte Gegenstände der realen Welt zu modellieren und diese dann in einem Programm darzustellen. Diese Objekte enthalten Informationen und Code, sodass die Informationen des realen Gegenstände, welches man modelliert, vertreten werden sollen. Zusätzlich enthalten die Objekte noch Funktionen oder ein bestimmtes Verhalten. Namensräume ermöglichen überdies noch eine klare Strukturierung und ermöglichen ein einfacheres Zugreifen auf Objekte. 
+
+\paragraph{Prozedurale Programmierung}
+
+Bei der Prozeduralen\cite{OOPvsProcedural} Programmierung wird dem Computer genau befohlen, wie ein Programm in logischen Schritten auszuführen ist. Das heißt, es wird nicht wie bei der OOP darauf geachtet, die Datenorganisiation und -abstraktion zu erreichen, sondern es wird auf die Verarbeitung fokussiert.
+
+
+Mit PHP kann man nicht nur HTML ausgeben, sondern auch Bilder, PDFs und sogar Flashanimationen. Natürlich kann man auch Textformate wie XHTML oder jegliche andere XML Formate ausgeben. PHP ermöglicht alle diese Dateien zu generieren und auch jene im Dateisystem zu speichern.
+
+Einer der bedeutendsten Eigenschaft von PHP ist die Unterstützung von einer Vielzahl an Datenbanken. Dadurch wird das entwickeln einer datenbankgestützte Webseite sehr simpel. Mit der Erweiterung PDO kann man sich jeder Datenbank verbinden, die von dieser unterstützt wird. Weiteres kann man auch Protokolle wie NNTP, HTTP, IMAP, LDAP, etc... verwenden. Einfache Netzwerk-Sockets können ebenfalls geöffnet werden.
+
+\section{Internetdienste}
+
+Internetdienste\cite{WebServices} übermitteln Daten von einem Server an den Client. Dabei benutzen sie für die Übermittlung bestimmte Nachrichtenformate, wie zum Beispiel JSON oder XML. 
+
+\subsection{REST - Representational State Transfer}
+
+REST\cite{REST} ist ein Architektur-Stil\cite{RESTArchitektur}. Das heißt, es gibt keine fixierten Standards, nur Prinzipien\cite{RESTPrinzipien} oder auch Einschränkungen, an die man sich halten muss. Das REST-Paradigma\cite{RESTConcept} ist dafür designed, um mit Ressourcen auf einem Server zu kommunizieren und als Protokoll wird oftmals HTTP verwendet. Der Unterschied zu anderen Architektur-Stilen ist, dass bei REST die Funktionalität nicht in der URI angegeben wird, sondern nur der Ort bzw. der Name der Ressource. Wenn ein System bestimmte Einschränkungen einhält, wird es als RESTful bezeichnet. Manchmal werden HTTP-APIs als RESTful-APIs oder RESTful-Services bezeichnet, obwohl sie nicht zwingend der REST-Einschränkungen entsprechen.
+
+Es gibt folgende REST Prinzipien:
+
+\subsubsection{Client-Server} 
+
+Die erste Einschränkung stellt das Trennen der Bedenken dar. Durch das Trennen von der Benutzeroberfläche Bedenken und der Datenspeicherung Bedenken, wird eine bestimmte Übertragbarkeit der Benutzeroberfläche auf mehreren Plattformen ermöglicht.
+
+\subsubsection{Zustandslosigkeit}
+
+Die Kommunikation zwischen Server und Client muss zustandslos sein. Jede Anfrage vom Client muss alle für den Web Service benötigten Daten beinhalten. 
+
+\subsubsection{Cache}
+
+Um die Geschwindigkeit, sowie die Effizienz zu steigern muss der Client fähig sein zwischenspeicherbare Informationen zu speichern. Falls die Information zwischenspeicherbar ist, besitzt der Client das Recht, diese Daten für spätere Anfragen zu verwenden.
+
+\subsubsection{Einheitliche Schnittstelle}
+
+Die Vereinheitlichung ist eine fundamentale Eigenschaft von der REST-Architektur. Damit hebt sie sich von anderen Netzwerk basierten Architekturen ab. Diese Eigenschaft ermöglicht eine Vereinfachung des Aufbaus des Systems und zusätzlich wird die Sichtbarkeit von Interaktionen erhöht. Da jedoch die Daten nicht in der Form übertragen werden, in der die Applikation sie benötigt, sondern wie die standardisierte Form es vorgibt, wird die Effizienz beeinträchtigt.  
+
+\subsubsection{Mehrschichtiges System}
+
+Dieses Prinzip erlaubt der Architektur aus mehreren hierarchischen Schichten zu bestehen. Durch das abkapseln des Wissens einer Komponente, das heißt sie kann nicht in eine andere Ebene blicken, wird die Komplexität des ganzen Systems verringert.
+
+\subsubsection{Code-On-Demand (Optional)}
+
+Die Clientfunktionalität kann durch Herunterladen von zusätzlichen Code erweitert werden. Damit sind die Grundfunktionalitäten reduziert und demnach müssen auch weniger vorab implementiert werden. Die Systemerweiterbarkeit wird dadurch enorm verbessert, dafür büßt die Sichbarkeit ein.
+
+\section{Webserver}
+
+Ein Webserver\cite{Webservers} kann sich auf eine Hardware oder Software beziehen. 
+
+\paragraph{Hardware} Hardwarebezogen ist ein Webserver ein Computer, auf dem Webserversofteware und Dateien (HTML, CSS, Bilder, Scripte) gespeichert werden. Dieser Computer ist mit dem Internet verbunden und unterstützt physischen Datenaustausch mit anderen Geräten im Internet.
+
+\paragraph{Software} Auf der Softwareseite besteht ein Webserver aus verschiedenen Komponenten, die den Zugriff auf die gespeicherten Dateien ermöglichen. Zusätzlich kann die Software URLs (Uniform Resource Locator) und HTTP (Protokoll) verstehen.
+
+\subsection{Apache}
+
+Der Open-Source Webserver Apache\cite{Apache} ist einer der meist genutzten im Internet. Nebenbei ist Apache, mit einer Veröffentlichung im Jahr 1995, einer der ältesten existierenden Webservern. Ein Nachteil an Apache ist, dass dieser eine Thread-basierte Struktur verwendet und es zu großen Leistungsabstützen kommen kann, wenn mehr als 10.000 Anfragen verarbeitet werden müssen.
+
+\subsection{Nginx}
+
+Nginx\cite{Nginx} ist ebenfalls ein Open-Source Webserver, welcher auf maximale Leistung und Geschwindigkeit ausgelegt ist. Funktionen, wie Web-Serving, Reverse-Proxying, Caching, Load-Balancing und viele mehr, werden unterstützt. Zusätzlich kann Nginx als Proxyserver für Emails fungieren. Ein Vorteil gegenüber Apache ist, dass Nginx eine ereignisgesteuerte Architektur besitzt. Das heißt, alle Anfragen werden in einem einzigen Thread verarbeitet.
+
+\subsection{Entscheidung Webserver}
+
+Durch die bessere Leistung bei höherem Anfragenverkehr und der einfachen Implementierung eines Reverse Proxys, ist Nginx die bessere Alternative. Auf die einfache Konfiguration und vielen schon voreingebauten Modulen von Apache ist verzichtbar, da schon genug Wissen im Team \textit{ThreeSixFive} vorhanden ist.
+
+\section{Laravel}
+
+\subsection{Was ist Laravel?}
+
+Infolge des PHP Major-Update 5.3 im Jahr 2009 wurden zahlreiche neue Feature implementiert, die Entwicklern ermöglichte bessere Objektorientierte PHP Programme zu entwickeln. Viele Frameworks unterstützten jedoch weiterhin ältere Versionen von PHP. Das Framework CodeIgniter gehörte damals zu den bekanntesten und wurde aufgrund seiner Schlichtheit, großen Community und einer umfangreichen Dokumentation oft von Entwicklern verwendet. Allerdings weist dieses Framework auch Mängel auf, welche von Tylor Otwell aber als essenziell in Web Applikationen angesehen wurden. Demgemäß entstand das PHP Framework Laravel\cite{Laravel}, welches von Tylor Otwell im Juni 2009 erstmals veröffentlicht wurde.
+
+\subsection{Features}
+
+\subsubsection{MVC - Model View Controller}
+
+Model-View-Controller\cite{MVC} ist eine Architektur, die eine Applikation in drei verschiedene Komponenten unterteilt. Durch diese Abgrenzung schafft MVC ein flexibles Programm, welches leicht veränderbar oder erweiterbar ist. Zusätzlich bringt die Abgrenzung den Vorteil, verschiedene Programmteile einfach wiederzuverwenden oder auch parallel weiterzuentwickeln, mit sich. Die MVC Architektur ist aufgrund dessen besonders im Webauftritt immer bekannter und beliebter geworden.
+Model - Ein Model ist sozusagen ein Datenmodell. Das heißt, es liefert Daten die für die Präsentation (User-Interface) benötigt werden. Dadurch wird das Model zur zentralen Komponente. 
+View - Die View ist das User-Interface, also das was der User sieht. Dabei kann eine View ein ganzer Teil einer Webseite sein oder auch nur ein Diagramm. 
+Controller - Der Controller ist das Verbindungsstück zwischen Model und View. Einerseits verarbeitet er User-Aktionen, die vom View aus kommen, konvertiert sie für das Model und gibt diese Informationen dann an diesen weiter. Andererseits bekommt der Controller vom Model Daten, die er anschließend für die View aufbereitet und diesen aktualisiert.
+
+\subsubsection{Eloquent ORM}
+
+ORM\cite{ORM} steht für Object Relational Mapper. Mithilfe eines ORMs\cite{WasistORM} kann man objektorientiertes Programmieren (OOP) und relationale Datenbanken zusammenführen, welche normalerweise inkompatible Systeme sind. Ein ORM vereint diese zwei Konzepte zu einer Objektdatenbank. Konkret heißt das, dass man zum Beispiel mittels PHP Objekte schreiben kann und diese durch ein ORM in eine Objektdatenbank umgewandelt werden.
+Eloquent ORM bietet in Laravel\cite{ORMinLaravel} eine ActiveRecord Implementation an. Grundlegend wird bei dieser Methode für jedes Model im MVC eine dazugehörige Tabelle in der Datenbank erstellt. Durch diese Methode wird die implementation von Tabellen enorm erleichtert. Zusätzlich macht Eloquent Datenbankabfragen, sowie Datenbankmanipulationen, lesbarer und einfacher zum Programmieren.
+
+\subsubsection{Blade}
+
+Der von Laravel einfache, jedoch sehr mächtige, Template-Engine Blade\cite{Blade} ist ein Feature, welches man nicht übersehen darf. Dieser unterscheidet sich von anderen PHP Template-Engines dadurch, dass er einem nicht die Verwendung von einfachen PHP Code in Views untersagt. Da jeder Blade-View in PHP kompiliert und gecached wird, ensteht dadurch kein zusätzlicher Zeitaufwand während der Laufzeit (Overhead).
+
+\subsubsection{Query builder}
+
+Mithilfe des Query builder\cite{QueryBuilder} kann man auf einfachster Weise Datenbankabfragen ausführen. Dabei funktioniert er auf jeder von Laravel unterstützten Datenbank, welches eine enorme Erleichterung ist, da die Syntax immer gleich bleibt. Zusätzlich gibt es zahlreiche Funktionen, mit denen man schlichte bis sehr komplexe Abfragen bauen kann. Der Query builder untersützt auch Abfragen auf 'JSON columns'. Ein wichtiges Sicherheitsfeature ist durch PDO Parameter Binding ebendfalls gegeben, wodurch SQL Injections verhindert werden.
+
+\subsubsection{Migrations}
+
+Migrations\cite{Migration} kann man als Versionskontrolle für die Datenbank sehen. Dadurch werden Teamarbeiten an der Datenbank um einiges vereinfacht und übersichtlicher. Darüber hinaus erleichtern Migrations das hinzufügen oder löschen von Tabellen und Einträgen. In sogenannten Migration Klassen werden mithilfe einer up und down Funktion diese Operationen ausgeführt oder rückgängig gemacht. Um alle ausstehenden Migration auszuführen wird nur das einzige Commando php artisan migrate benötigt. Gespeichert werden alle Migrations in der automatisch erstellten Tabelle "migrations" in der Datenbank. Mithilfe der Tabelle kann man auf jede durchgeführte Migration zugeriffen werden.
+
+\section{Lumen}
+
+\subsection{Was ist Lumen?}
+
+Lumen\cite{Lumen} ist ein Mikro-Framework von PHP. Ein Mikro-Framework representiert eine kleine, schnelle und vereinfachte Version eines richtigen Frameworks. Da Lumen auch von Laravel geschrieben wurde, besitzt es die gleiche Grundlage wie das Laravel Framework.
+
+\subsubsection{Wozu Lumen?}
+
+Wenn auf das Konfigurationsmaß und die Flexabilität von Laravel verzichten werdem kann, jedoch die Verbraucherfreundlichkeit und das Vermögen trotzdem beibehalten möchte, stellt Lumen eine gute Alternative dar. Durch diesen Kompromiss erhält man zusätzlich einen enormen Geschwindigkeits-Boost.
+
+\subsection{Features}
+
+Wie oben schon beschrieben, baut Lumen auf Laravel auf. Somit besitzt Lumen die gleichen Grundfunktionen wie Laravel. Wenn man jedoch etwas detailierter in die Funktionen von Lumen blickt, erkennt man, dass grundsätzlich weniger Funktionen implementiert sind. Da aber Lumen nur ein Mikro-Framework ist, sollte das nicht überraschend sein. Besonders bei der Artisan CLI sieht man die Reduzierungen der Funktionen.
+
+\section{Entscheidungsanalyse Framework}
+
+Bei der Entscheidung des Framework muss auf verschiedene Aspekte geachtet werden. Durch die sehr gute Benutzerfreundlichkeit und dem einfachen Code Style ist Laravel für \textit{Threesixfive} eine passende Entscheidung gewesen. Da sich \textit{Threesixfive} jedoch als Backend eine RESTful API entschieden hat, stellt das Mikro-Framework Lumen auch noch eine Option dar. Lumen gleicht im Aufbau Laravel, somit ermöglicht es einen gleichen Umgang. Weitere positive Aspekte von Lumen sind:
+
+\paragraph{Geschwindigkeit}
+
+Da \textit{Threesixfive} ein Geschwindigkeitseffizentes Backend benötigt, wird eine schnelle API vorausgesetzt. Lumen bringt eine ultraschnelle API mit sich, ohne noch zusätzlich viel ändern zu müssen. Auf die Funktionen, die Bei Lumen im Vergleich zu Laravel wegfallen, kann man im dem Fall verzichten.
+
+\paragraph{Dokumentation}
+
+Um mit einem neuen Programm oder Framework effizient arbeiten zu können, ist eine gut strukturierte und qualitative Dokumentation wichtig. Im Falle von Lumen existiert eine sehr gute Dokumentation, wobei man zusätzlich, durch die große Ähnlichkeit zu Laravel, auch die Laravel Dokumentation verwenden kann.
+
+\paragraph{Kompatibilität}
+
+Sowohl die Hauptdatenbank, die mit PostgreSQL betrieben wird, als auch alle anderen Erweiterungen, die man benötigt, werden von Lumen vollkommen unterstützt und sind einfach zu implementieren. Ein weiterer wichtiger Punkt dabei ist, dass eine Lumen API ohne Probleme mit dem Frontend Angular 7 kompatibel ist. Nebenbei unterteilt sie die Applikation in zwei klare Teile - Fronend und Backend. Dadurch kann man als Team ohne Abhängigkeitsproblemen an dem Projekt arbeiten.
+
+\paragraph{Fazit}
+
+Aufgrund dieser angefürten Aspekte stellt eine Lumen Applikation die perfekte Lösung für das benötigte Backend. Durch die mächtigen Funktionen von Laravel, der enormen Geschwindigkeit von Lumen und einer guten Dokumentation hat es alle anderen Frameworks übertrumpft.
+

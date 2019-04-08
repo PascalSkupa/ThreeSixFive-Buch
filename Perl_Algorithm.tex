@@ -1,0 +1,159 @@
+% ------------------------------------------------------
+%		       Chapter 2
+%		      Algorithmus
+% ------------------------------------------------------
+
+\section{FatSecret API}
+
+\subsection{API Antworten}
+
+Mithilfe der FatSecret\cite{FatSecretAPI} API erhält der Algorithmus alle Informationen zu einem Rezept. Diese Informationen werden als JSON Format übermittelt. 
+
+\subsection{JSON - JavaScript Object Notation}
+
+JavaScript\cite{JSON} Object Notation ist ein Format für den Datenaustausch. Ein großer Vorteil stellt dabei dar, dass es für Menschen sehr leicht lesbar und für Maschinen sehr leicht analysierbar und generierbar ist. Da JSON ein vollkommen Sprachunabhängiges Format ist, macht es das zur perfekten Sprache für den Datenaustausch.
+
+Die Struktur von JSON basiert auf einen simplen Aufbau. Ein JSON Objekt besteht aus einer Sammlung von verschiedenen Name / Wert-Paaren. In den verschiedenen Programmiersprachen ähnelt dieser Aufbau meist einem Objekt, Rekord, Liste oder einem assoziatives Array sehr ähnlich. Da diese Struktur universell ist und von vielen Sprachen verwendet wird, stellt JSON enorm kompatibles Format dar.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics{Json_01.png} 
+\caption{Json Objekt (Lizenz zum Bild: \cite{JsonObjectBild})} 
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics{Json_02.png} 
+\caption{Json Array (Lizenz zum Bild: \cite{JsonArrayBild})} 
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics{Json_03.png} 
+\caption{Value eines Json Objektes (Lizenz zum Bild: \cite{JsonValueBild})} 
+\end{figure}
+
+\subsection{FatSecret Bibliothek für PHP}
+
+Um die Verwendbarkeit der REST API zu erleichtern, bietet FatSecret verschiedene Bibliotheken\cite{FatSecretLib} für unterschiedliche Programmiersprachen an. Da jedoch die Bibliothek nicht alle von \textit{Threesixfive} benötigten Funktionen enthält, mussten welche dazu entwickelt werden.
+
+\subsection{API Anfragen}
+
+Jede Anfrage\cite{FatSecretRESTAPI} an die FatSecret API muss bestimmte Voraussetzungen haben. Nebenbei gibt es verschiedene Methoden um Rezepte, Zutaten oder andere Informationen zu bekommen. 
+
+\paragraph{Authentifizierung}
+
+Jede Anfrage\cite{FatSecretAuth} muss mithilfe dem Protokoll OAuth signiert sein. Wie im Kapitel FatSecret schon beschrieben, wird ein Consumer Key und ein Consumer Secret benötigt. Anschließend müssen bei einer HTTP POST Anfrage folgende Parameter angegeben werden:
+
+\begin{itemize}
+\item{oauth\_consumer\_key}
+\item{oauth\_signature\_method}
+\item{oauth\_timestamp}
+\item{oauth\_nonce}
+\item{oauth\_version}
+\end{itemize}
+
+Diese Parameter werden als normalisierte Parameter bezeichnet. Falls einer dieser Parameter nicht mitgeschickt wird, schlägt die Anfrage fehl. Zuletzt muss noch die Signature value errechnet werden und als Parameter oauth\_signature mitgeschickt werden. Wie oben schon beschrieben wird durch die Benützung einer vorgegebenen Bibliothek die ganze Arbeit des Generierens der korrekten Authentifizierung abgenommen. 
+
+\paragraph{OAuth}
+
+OAuth\cite{OAuth} ist ein offenes Standard-Autorisierungs-Protokoll. Es kann einen sicheren Zugriff auf eine Applikation gewähren. Anstatt Passwörter zu verweden, autorisiert OAuth mit Tokens, um eine Identität zu überprüfen. Wichtig hierbei ist, dass es nur die Funktion der Autorisierung beherrscht und nicht die der Authentifizierung. Das heißt, es überprüft, ob man die Berechtigung besitzt um auf etwas zugreifen zu können, aber nicht ob man die richtige Person ist, also die Person für die man sich ausgibt.
+
+\section{Algorithmus}
+
+Der Algorithmus basiert auf Zufallsabfragensystem, die auf ein Pool von Rezepten zugreifen. Durch die FatSecret API kann man nach verschiedenen Rezepten suchen, welche nach Speise gefiltert werden können. Als Antwort von der API erhält man ein JSON Objekt mit den angefragten Informationen. Da diese Antworten sehr riesig sein können, wird mithilfe von Paginierung es auf Seiten mit jeweils 50 Objekten unterteilt. 
+
+Im Prinzip heißt das, der Algorithmus fragt erst nach, wie viele Seiten und Objekte es insgesamt gibt. Danach errechnet sich dieser eine zufällige Seite. Diese Seite wird angefragt und anschließend nach dem Empfang in ein Array umgewandelt. Aus diesem Array werden nun wieder zufällig Rezepte herausgepickt und verarbeitet. Durch einen Userpräferenzen-Check, der im Kapitel Userpräferenzen näher erläutert wird, wird überprüft ob das Rezept den Anforderungen entspricht. Falls das Rezept den Userpräferenzen-Check erfolgreich bestanden hat, wird ein Historien-Check, welcher im Unterkapitel Historie näher erläutert wird, ausgeführt. Dieser überprüft das Rezept in der letzten Woche schon im Plan beinhaltet war. Schlussendlich nachdem das Rezept alle Checks bestanden hat, wird es in den neuen Plan eingefügt. 
+
+\subsection{Caching}
+
+Die Zwischenspeicherung der API Antworten ist ein wichtiger Aspekt, um die Effizienz sowie die Geschwindigkeit deutlich zu verbessern. Jede Anfrage an die FatSecret API dauert im Schnitt 300 bis 700 Millisekunden. Bei einer Plangenerierung können es über 300 Anfragen anfallen. Das heißt, es können Wartezeiten von 90 bis 210 Sekunden entstehen. Um diese lange Wartezeit zu reduzieren, werden alle empfangenen Antworten mithilfe von Redis zwischengespeichert. Die FatSecret Platform API Nutzungsbedingungen untersagt das persistente Speichern aller Daten außer:
+\begin{itemize}
+\item{food\_id}
+\item{food\_entry\_id}
+\item{serving\_id}
+\item{recipe\_id}
+\item{saved\_meal\_id}
+\item{saved\_meal\_item\_id}
+\item{exercise\_id}
+\end{itemize}
+
+Alle anderen Daten dürfen nur maximal für 24 Stunden zwischengespeichert werden. Redis unterstützt das durch eine Time-To-Live (TTL), die bei jedem Objekt gesetzt werden kann. Um die Nutzbarkeit und Effizienz noch weiter zu verbessern, wird bei jeder Anfrage an den Cache die TTL geprüft. Falls diese unter 3600 Sekunden (1 Stunde) liegt, wird das Objekt asynchron erneut von der API angefragt und aktualisiert. Diese Operation kann aber zu einer Antwortverzögerung führen, wodurch das Zwischenspeichern wieder ineffizienter wird. Um diese Verzögerung zu verhindern, bietet Lumen Job Klassen an. Jobs sind Aufgaben, die einer Warteschlange hinzugefügt werden und danach asynchron abgearbeitet werden. Das asychrone Arbeiten erzeugt beim Auffrischen des Zwischenspeichers keine Verzögerung mehr. Alle Jobs werden in der Hauptdatenbank in der von Lumen automatisch generierten Tabelle "jobs" gespeichert. Die fehlgeschlagenen Jobs werden in einer eigenen Tabelle "failed\_jobs" gespeichert.
+
+\subsection{Erweitertes Caching}
+
+Da bei einem leeren Zwischenspeicher die Anfragen trotzdem noch im Schnitt bis zu 30 Sekunden dauern können, wird mithilfe einer Anfragen-Analyse eine Liste erstellt, um die am häufigsten benötigten Objekte immer im Zwischenspeicher zu haben. Dafür wird in der Hauptdatenbank in einer Tabelle jede Anfrage gezählt. Anschließend werden jeden Tag um 0 Uhr die häufigsten 250 angefragten Objekte neu in den Zwischenspeicher geladen.
+
+\paragraph{Redis - Remote Dictionary Server}
+
+Redis\cite{Redis} ist eine Open-Source NoSQL In-Memory\cite{InMemoryDatabase} Datenbank. In-Memory Datenbanken speichern ihre Datensätze nur im RAM. Somit muss die Datenbank nie auf eine Festplatte zugreifen, sondern nur auf den RAM, der um ein vielfaches schneller ist. Der Nachteil dabei ist, dass bei einem Datenverlust keine Daten wiederhergestellt werden können. Jedoch machen diese zwei Eigenschaften es zu einem perfekten Zwischenspeicher. Redis gilt als die schnellste In-Memory Datenbank und zusätzlich noch als der am meisten verbreitete Schlüssel-Werte-Speicher\cite{KeyValueStores}. Schlüssel-Werte-Speicher sind einer der simpelsten Datenbank Management Systeme. Wie der Name schon sagt, kann man nur Schlüssel-Werte Paare gemeinsam speichern. Einen Wert bekommt man nur dann, wenn man den dazugehörigen Schlüssel weiß. Lumen unterstützt Redis out-of-the-box und ist daher die beste Alternative. 
+
+\subsection{Historie}
+
+Um die Qualität des generierten Wochenplanes zu verbessern, wird in den Algorithmus die Historie der vergangenen Woche miteinbezogen. Da der Benutzer wahrscheinlich nicht jede Woche die gleichen Speisen bekommen möchte, muss überprüft werden, wann und wie oft eine Speise schon in einem Wochenplan war. Daher wird, nachdem die Userpräferenzen überprüft wurden, noch ein Historen Check durchgeführt. Dieser beinhaltet einen Abgleich mit der davor generierten Woche. Falls die Speise in der letzten Woche schon vorhanden war, wird sie jedoch noch nicht aussortiert. Zunächst wird die als mögliche Speise eingestuft. Wenn es keine passenden Rezepte mehr gibt, wird nun auf die möglichen Speisen zugegriffen.
+
+\subsection{Einkaufsliste}
+
+Eine Nebenfunktionalität des Algorithmus ist es, eine Einkaufsliste aus dem generierten Wochenplan zu erstellen. Dabei sollte sie vom Benutzer selbst mit persönlichen Items erweiterbar sein und zusätzlich dynamisch auf den Wochenplan reagieren. Womit diese Funktion eine der komplexesten der Applikation ist.
+
+\subsection{Wochenplan als PDF}
+
+Da für die Abfrage des generierten Wochenplans immer eine Internetverbindung benötigt wird, ermöglicht eine PDF Downloadfunktion eine Verbesserung der Verwendbarkeit. Diese PDF wird mittels der Erweiterung TCPDF von Lumen aus der Datenbank heraus generiert.
+
+\paragraph{TCPDF}
+
+TCPDF\cite{TCPDF} ist eine Open-Source PHP Bibliothek, mit der man simpel PDFs generieren kann. Der große Vorteil dabei ist, dass keine zusätzlichen externen Bibliotheken für die Grundfunktionalitäten benötigt werden. Weiteres kann eine PDF aus einem HTML Code generiert werden. Dies macht das Bauen und Designen der PDF sehr einfach.
+
+\paragraph{PDF - Portable Document Format}
+
+Das Datei Format PDF\cite{PDF} ist ein sehr verbreitetes Dokumentenformat. Durch die vollkommende Softwareunabhängigkeit, Hardware-Plattform Unabhängigkeit sowie die Betriebssystemunabhängigkeit ist es ein optimales Format, um jeden Benutzer eine digitale Form des Wochenplans als Dokument bereitzustellen.
+
+\section{Userpräferenzen}
+
+Ohne Userpräferenzen wäre der Sinn der Idee nicht wirklich erfüllt. Der Benutzer möchte auswählen können, welche Unverträglichkeiten und Antipathien dieser gegen bestimmte Zutaten hegt. Daher existieren es drei Kategorien, durch welche der Benutzer sich seinen Wochenplan individuell anpassen kann. Zusätzlich kann der Benutzer bestimmte Speisen an bestimmten Tagen auswählen und somit hat dieser volle Kontrolle über den Wochenplan.
+
+\paragraph{Allergien}
+
+Viele Menschen haben Allergien. Um dem Benutzer passende Rezepte zu liefern, müssen Allergien miteinbezogen werden. Die Herausforderung dabei ist, dass die FatSecret API keinen Allergene bei den Rezepten vermittelt. Dadurch, dass alle Zutaten eines Rezeptes in Kategorien eingeteilt sind, müssen diese für die Erkennung von Allergenen benutzt werden. Dementsprechend muss Algorithmus jede Zutat überprüfen und auszusortieren.
+
+\paragraph{Diäten}
+
+Da viele Menschen sich nach bestimmten Diäten richten, muss diese Auswahlmöglichkeit ebenfalls in unsere Applikation eingebaut werden. Der Benutzer kann 5 verschiedene Diäten auswählen. Diese Diäten werden von FatSecret bei jedem Rezept mitgeschickt, wodurch der Algorithmus diese effizient aussortieren kann.
+
+\paragraph{No-Gos}
+
+No-Gos sind die von Menschen auf häufigsten abgeneigten Ingredienzien. Es gibt insgesamt 14 verschiedene No-Gos zum Auswählen. So, wie bei den Allergenen müssen zur Aussortierung die Kategorien der einzelnen Zutaten eines Rezeptes benutzt werden.
+
+\paragraph{Tage und Speisen}
+
+Durch die Auswahlmöglichkeit, welche Speisen der Benutzer an welchen Tagen haben möchte, wird die Nutzbarkeit und Benutzerfreundlichkeit maximiert. Dabei kann der User vier verschiedene Speisen zu jeweils vier unterschiedlichen Tageszeiten auswählen. Diese Werte beeinflussen nicht die Arbeitsweise des Algorithmus, nur nach wie vielen Rezepten er sucht.
+
+\section{Herausforderungen}
+
+\subsection{CORS - Cross-origin resource sharing}
+
+CORS\cite{CORS} ist ein Mechanismus, der zusätzliche Header verwendet, um dem Browser zu mitzuteilen, dass man die Berechtigung besitzt, auf Ressourcen zugreifen zu dürfen, die von einem anderen Ursprung stammen. Eine Applikation führt also dann eine cross-origin HTTP Anfrage durch, wenn die angefragte Ressource einen anderen Ursprung hat als den eigenen.
+
+Eine sehr große Herausforderung beim Entwickeln der Applikation was CORS. Da das Backend, also die Lumen API, amauf dem Server läuft und das Frontend, Angular 7, jedoch auf dem Client, entsteht eine cross-origin HTTP Anfrage.
+
+\paragraph{Lösung}
+
+Um diesen unerlaubten Zugriff zu lösen, wurde vor dem Backend ein Reverse Proxy implementiert. Dadurch greift das Frontend nur auf den Reverse Proxy zu und der wiederum dann auf das Backend. Somit entsteht kein CORS Error mehr. Zusätzlich hat der Reverse Proxy viele weitere Vorteile.
+
+\paragraph{Reverse Proxy}
+
+Ein Reverse Proxy\cite{ReverseProxy} ist ein Zwischen- oder Vermittlungsserver. Dieser Typ von Proxy Server sitzt im privaten Netzwerk normalerweise hinter der Firewall und leitet Clientanforderungen an das Backend weiter. Durch zusätzliche Abstraktions- und Steuerungsstufen bietet ein Reverse Proxy einen reibungslosen Datenverkehr zwischen Server und Client. Da der Reverse-Proxyserver Anfragen an den Backend-Server abfangen, schützten diese außerdem die Identität der Backend-Server.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics{reverse_proxy.png} 
+\caption{Reverse Proxy Visualisiert (Lizenz zum Bild: \cite{BildReverseProxy})} 
+\end{figure}
+
+\subsection{Compound Primary Keys mit Eloquent ORM}
+
+Compound Primary Keys sind Schlüssel, die aus mehreren Datenbank Attributen bestehen. Wie im Kapitel Hauptdatenbank entnehmbar, werden Compound Keys benötigt. Eloquent ORM unterstützt diese Art von Schlüssel nicht.
+
+\paragraph{Lösung}
+
+Mithilfe von rohen SQL Injektionen können trotzdem Compound Key Paare entstehen. Es ist vielleicht nicht direkt eine Lösung des Problems, jedoch in diesem Fall vollkommen ausreichend.
